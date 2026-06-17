@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disjoint Unit Disc Puzzle</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='22' fill='%23df8f24' fill-opacity='.35' stroke='%239e5d05' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%231d5fd0'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=20260617c" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Interactive unit disc workspace">
+        <div class="canvas-wrap">
+          <canvas id="scene" aria-label="Drag the unit discs to try to cover all ten points"></canvas>
+          <div class="hud" aria-live="polite">
+            <span id="coverageStatus">0 / 10 covered</span>
+            <span id="overlapStatus">No overlaps</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel" aria-label="Puzzle controls">
+        <header class="panel-header">
+          <p class="label">3B1B Unit Disc Puzzle</p>
+          <h1>Try to break the 10 point cover</h1>
+          <a class="source-link" href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">
+            Original short
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 17 17 7" />
+              <path d="M9 7h8v8" />
+            </svg>
+          </a>
+        </header>
+
+        <div class="control-group">
+          <label for="spacing">Point spacing X</label>
+          <div class="control-row">
+            <input id="spacing" type="range" min="0.2" max="3" step="0.05" value="1.1" />
+            <input id="spacingNumber" type="number" min="0.2" max="3" step="0.05" value="1.10" />
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="scale">Pixels per unit</label>
+          <div class="control-row">
+            <input id="scale" type="range" min="52" max="130" step="2" value="86" />
+            <output id="scaleValue" for="scale">86</output>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="group-label">Point layout</span>
+          <div class="segmented" role="radiogroup" aria-label="Point layout">
+            <button class="segment active" type="button" data-layout="lattice" aria-pressed="true">Lattice</button>
+            <button class="segment" type="button" data-layout="ring" aria-pressed="false">Ring</button>
+            <button class="segment" type="button" data-layout="line" aria-pressed="false">Line</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="group-label">Disc drag</span>
+          <div class="lock-row">
+            <button
+              id="dragLock"
+              class="icon-button active"
+              type="button"
+              aria-pressed="true"
+              aria-label="Discs locked to drag together"
+              title="Discs locked to drag together"
+            >
+              <svg class="icon lock-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10V8a5 5 0 0 1 10 0v2" />
+                <rect x="5" y="10" width="14" height="10" rx="2" />
+                <path d="M12 14v2" />
+              </svg>
+              <svg class="icon unlock-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10V8a5 5 0 0 1 9.4-2.4" />
+                <rect x="5" y="10" width="14" height="10" rx="2" />
+                <path d="M12 14v2" />
+              </svg>
+            </button>
+            <output id="dragMode" for="dragLock">Grouped</output>
+          </div>
+        </div>
+
+        <div class="control-grid">
+          <button id="resetDiscs" type="button">Reset discs</button>
+          <button id="resetView" type="button">Center view</button>
+          <button id="shufflePoints" type="button">Jitter points</button>
+          <button id="clearJitter" type="button">Clear jitter</button>
+        </div>
+
+        <div class="readout">
+          <div>
+            <span>Covered points</span>
+            <strong id="coveredCount">0/10</strong>
+          </div>
+          <div>
+            <span>Disc overlap pairs</span>
+            <strong id="overlapCount">0</strong>
+          </div>
+          <div>
+            <span>Closest point gap</span>
+            <strong id="pointGap">1.10</strong>
+          </div>
+        </div>
+
+        <div class="notes">
+          <p>Blue dot: uncovered point. Green dot: covered point. Amber area: radius-1 disc.</p>
+          <p>Red rim: overlapping disc. Locked discs drag as one staggered tangent packing.</p>
+        </div>
+      </aside>
+    </main>
+
+    <script src="app.js?v=20260617b" type="module"></script>
+  </body>
+</html>
