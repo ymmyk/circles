@@ -300,10 +300,9 @@
         </div>
         <div class="card">
           <strong>Hand-checkable bounds for k</strong>
-          <div class="answer">13 to 50</div>
+          <div class="answer">13 &le; k &le; 50</div>
           <p class="note">
-            Published proof bounds for the first noncoverable size. Search-only candidate:
-            <span class="math">k &le; 45</span>.
+            Reported computer-search bound: <span class="math">k &le; 45</span>.
           </p>
         </div>
       </div>
@@ -433,125 +432,6 @@
         </p>
       </section>
 
-      <section class="review">
-        <h2>Internal Review Appendix</h2>
-        <p class="note">
-          These entries document the requested iterative review process. They are not peer review and are not
-          independent evidence beyond the proofs and sources above.
-        </p>
-        <h3>Loop 1</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Status</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Any 10 points are coverable</td>
-              <td>Accepted</td>
-              <td>Follows from the hexagonal-packing density and expectation argument, with boundary/tangency caveats stated.</td>
-            </tr>
-            <tr>
-              <td>The exact minimum failure size is known</td>
-              <td>Rejected</td>
-              <td>The exact value is not known; only bounds are stated.</td>
-            </tr>
-            <tr>
-              <td>A 10-point counterexample exists</td>
-              <td>Rejected</td>
-              <td>Rejected: the density proof shows no 10-point counterexample exists.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>Loop 2</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Status</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Ten-point proof</td>
-              <td>Accepted</td>
-              <td>The density/expectation proof was accepted after quotient-cell and finite-subcollection wording was tightened.</td>
-            </tr>
-            <tr>
-              <td>Threshold translation</td>
-              <td>Accepted</td>
-              <td>Since <span class="math">C(n)</span> is downward monotone, <span class="math">k = sigma_2 + 1</span>.</td>
-            </tr>
-            <tr>
-              <td>Upper-bound wording</td>
-              <td>Revised</td>
-              <td>The hand-checkable <span class="math">k &le; 50</span> bound was separated from the reported computer-search <span class="math">k &le; 45</span> candidate.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>Loop 3</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Status</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Terminology</td>
-              <td>Revised</td>
-              <td>Terminology was revised to use non-overlapping and pairwise interior-disjoint language for the tangency-allowed puzzle rule.</td>
-            </tr>
-            <tr>
-              <td>Computer upper bound</td>
-              <td>Revised</td>
-              <td>The 45-point result is described as reported by exhaustive computer search, not as a fully presented hand certificate.</td>
-            </tr>
-            <tr>
-              <td>Exact-threshold roadmap</td>
-              <td>Accepted</td>
-              <td>The roadmap explains that exact values require lower-bound theorems plus explicit counterexample certificates, possibly backed by exact real-algebraic or verified case-split methods.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>Loop 4</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Status</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Ten-point proof</td>
-              <td>Accepted</td>
-              <td>Translation-only randomization, density, and boundary handling were accepted; the strict no-tangency aside was clarified.</td>
-            </tr>
-            <tr>
-              <td>First-order certificate roadmap</td>
-              <td>Revised</td>
-              <td>The roadmap now gives explicit existential centers and squared polynomial inequalities.</td>
-            </tr>
-            <tr>
-              <td>Search-only 45-point result</td>
-              <td>Revised</td>
-              <td>The 45-point configuration is presented as a reported search-only candidate rather than a hand-checkable bound.</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
       <section id="references">
         <h2>References</h2>
         <ul>
@@ -582,7 +462,7 @@
       </section>
 
       <footer>
-        Last reviewed: 2026-06-17. This page separates proved facts from open status; internal review loop: 4.
+        Last reviewed: 2026-06-17. This page separates proved facts from open status.
       </footer>
     </main>
   </body>
