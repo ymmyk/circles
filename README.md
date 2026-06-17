@@ -10,6 +10,7 @@ Source puzzle: [3B1B YouTube Short](https://www.youtube.com/shorts/QLu_ZsRc_G0)
 
 - Draws 10 configurable points in the plane.
 - Draws 10 unit discs in a staggered tangent packing.
+- Lets you switch between moving circles and moving points.
 - Lets you drag the full disc packing as a locked group by default.
 - Lets you unlock the discs and drag individual unit discs.
 - Shows live coverage count, overlap count, and closest point spacing.
@@ -36,8 +37,9 @@ You can also open `index.html` directly in a browser.
 - `Point spacing X`: sets the distance scale for the point arrangement.
 - `Pixels per unit`: zooms the canvas unit scale.
 - `Point layout`: switches the 10-point arrangement.
+- `Move target`: switches canvas dragging between circles and points.
 - Lock icon: toggles grouped disc dragging versus individual disc dragging.
 - `Reset discs`: restores the staggered tangent disc packing.
 - `Center view`: recenters the canvas.
 - `Jitter points`: perturbs the points slightly.
-- `Clear jitter`: restores the exact selected point layout.
+- `Clear jitter`: restores the exact selected point layout, including manually moved points.

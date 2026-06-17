@@ -17,6 +17,7 @@ const clearJitterButton = document.querySelector("#clearJitter");
 const dragLockButton = document.querySelector("#dragLock");
 const dragMode = document.querySelector("#dragMode");
 const layoutButtons = [...document.querySelectorAll("[data-layout]")];
+const dragTargetButtons = [...document.querySelectorAll("[data-drag-target]")];
 
 const coveredCount = document.querySelector("#coveredCount");
 const overlapCount = document.querySelector("#overlapCount");
@@ -34,6 +35,8 @@ const state = {
   jitter: Array.from({ length: DISC_COUNT }, () => ({ x: 0, y: 0 })),
   drag: null,
   hoverDisc: -1,
+  hoverPoint: -1,
+  dragTarget: "disc",
   groupDragLocked: true,
 };
 
@@ -237,7 +240,7 @@ function drawDiscs(overlaps) {
   state.discs.forEach((disc, index) => {
     const center = worldToScreen(disc);
     const radius = UNIT_RADIUS * state.scale;
-    const isHover = state.hoverDisc === index;
+    const isHover = state.dragTarget === "disc" && state.hoverDisc === index;
     const isOverlapping = overlapped.has(index);
 
     ctx.save();
@@ -267,10 +270,11 @@ function drawPoints(currentPoints) {
   currentPoints.forEach((point, index) => {
     const screen = worldToScreen(point);
     const covered = coveredDiscIndex(point) !== -1;
+    const isHover = state.dragTarget === "point" && state.hoverPoint === index;
 
     ctx.save();
     ctx.beginPath();
-    ctx.arc(screen.x, screen.y, covered ? 7 : 6, 0, Math.PI * 2);
+    ctx.arc(screen.x, screen.y, isHover ? 10 : covered ? 7 : 6, 0, Math.PI * 2);
     ctx.fillStyle = covered ? "#138a58" : "#1d5fd0";
     ctx.shadowColor = covered ? "rgba(19, 138, 88, 0.28)" : "rgba(29, 95, 208, 0.25)";
     ctx.shadowBlur = 10;
@@ -278,7 +282,7 @@ function drawPoints(currentPoints) {
 
     ctx.shadowBlur = 0;
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "#fffdf7";
+    ctx.strokeStyle = isHover ? "#df8f24" : "#fffdf7";
     ctx.stroke();
 
     ctx.fillStyle = "#18212b";
@@ -359,12 +363,42 @@ function hitDisc(screenPoint) {
   return best;
 }
 
+function hitPoint(screenPoint) {
+  const currentPoints = points();
+  let best = -1;
+  let bestDistance = Infinity;
+  currentPoints.forEach((point, index) => {
+    const pointScreen = worldToScreen(point);
+    const d = distance(screenPoint, pointScreen);
+    if (d <= 16 && d < bestDistance) {
+      best = index;
+      bestDistance = d;
+    }
+  });
+  return best;
+}
+
 function onPointerDown(event) {
   canvas.setPointerCapture(event.pointerId);
   const screen = pointerPosition(event);
-  const discIndex = hitDisc(screen);
   canvas.classList.add("dragging");
 
+  if (state.dragTarget === "point") {
+    const pointIndex = hitPoint(screen);
+    if (pointIndex !== -1) {
+      const world = screenToWorld(screen);
+      const currentPoint = points()[pointIndex];
+      state.drag = {
+        type: "point",
+        index: pointIndex,
+        dx: currentPoint.x - world.x,
+        dy: currentPoint.y - world.y,
+      };
+      return;
+    }
+  }
+
+  const discIndex = state.dragTarget === "disc" ? hitDisc(screen) : -1;
   if (discIndex !== -1) {
     const world = screenToWorld(screen);
     if (state.groupDragLocked) {
@@ -395,9 +429,11 @@ function onPointerMove(event) {
   const screen = pointerPosition(event);
 
   if (!state.drag) {
-    const nextHover = hitDisc(screen);
-    if (nextHover !== state.hoverDisc) {
-      state.hoverDisc = nextHover;
+    const nextHoverDisc = state.dragTarget === "disc" ? hitDisc(screen) : -1;
+    const nextHoverPoint = state.dragTarget === "point" ? hitPoint(screen) : -1;
+    if (nextHoverDisc !== state.hoverDisc || nextHoverPoint !== state.hoverPoint) {
+      state.hoverDisc = nextHoverDisc;
+      state.hoverPoint = nextHoverPoint;
       draw();
     }
     return;
@@ -416,6 +452,13 @@ function onPointerMove(event) {
     const disc = state.discs[state.drag.index];
     disc.x = world.x + state.drag.dx;
     disc.y = world.y + state.drag.dy;
+  } else if (state.drag.type === "point") {
+    const world = screenToWorld(screen);
+    const basePoint = state.basePoints[state.drag.index];
+    state.jitter[state.drag.index] = {
+      x: world.x + state.drag.dx - basePoint.x,
+      y: world.y + state.drag.dy - basePoint.y,
+    };
   } else {
     state.offset.x += screen.x - state.drag.last.x;
     state.offset.y += screen.y - state.drag.last.y;
@@ -431,6 +474,24 @@ function onPointerUp(event) {
   }
   state.drag = null;
   canvas.classList.remove("dragging");
+}
+
+function setDragTarget(target) {
+  state.dragTarget = target;
+  state.hoverDisc = -1;
+  state.hoverPoint = -1;
+  canvas.setAttribute(
+    "aria-label",
+    target === "point"
+      ? "Drag the points to test custom ten-point arrangements"
+      : "Drag the unit discs to try to cover all ten points",
+  );
+  dragTargetButtons.forEach((button) => {
+    const isActive = button.dataset.dragTarget === target;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  draw();
 }
 
 function setSpacing(value) {
@@ -510,6 +571,9 @@ clearJitterButton.addEventListener("click", () => {
 layoutButtons.forEach((button) => {
   button.addEventListener("click", () => setLayout(button.dataset.layout));
 });
+dragTargetButtons.forEach((button) => {
+  button.addEventListener("click", () => setDragTarget(button.dataset.dragTarget));
+});
 
 canvas.addEventListener("pointerdown", onPointerDown);
 canvas.addEventListener("pointermove", onPointerMove);
@@ -519,5 +583,6 @@ window.addEventListener("resize", resizeCanvas);
 
 regeneratePoints();
 resetDiscs();
+setDragTarget("disc");
 setDragLock(true);
 resizeCanvas();
