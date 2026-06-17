@@ -4,6 +4,8 @@ An interactive single-page canvas app for exploring the 3Blue1Brown short about 
 
 Source puzzle: [3B1B YouTube Short](https://www.youtube.com/shorts/QLu_ZsRc_G0)
 
+![Circles app screenshot](assets/circles-screenshot.png)
+
 ## What It Does
 
 - Draws 10 configurable points in the plane.
