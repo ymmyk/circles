@@ -239,6 +239,10 @@ output {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.segmented.five-up {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .segment {
   border-color: transparent;
   background: transparent;
@@ -246,6 +250,7 @@ output {
   padding: 0 7px;
   font-size: 12px;
   font-weight: 800;
+  line-height: 1.05;
 }
 
 .segment.active {
@@ -380,5 +385,9 @@ output {
   .control-grid,
   .control-row {
     grid-template-columns: 1fr;
+  }
+
+  .segmented.five-up {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

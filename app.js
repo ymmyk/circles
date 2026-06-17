@@ -7,6 +7,8 @@ const OVERLAP_EPSILON = 0.002;
 const COVER_EPSILON = 0.0005;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 const LINE_POINT_MIN_SCREEN_GAP = 4;
+const HARD_RING_SPACING_ANCHOR = 1.1;
+const HARD_RING_RADII = [0.1, 0.721, 1.0001];
 
 const canvas = document.querySelector("#scene");
 const ctx = canvas.getContext("2d");
@@ -115,6 +117,43 @@ function createLinePoints(step, count) {
     x: (index - (count - 1) / 2) * step,
     y: Math.sin(index * 1.7) * step * 0.11,
   }));
+  return centerPoints(points);
+}
+
+function splitHardRingCounts(count) {
+  const inner = Math.min(count, Math.max(3, Math.round(count / 15)));
+  const remaining = count - inner;
+  const middle = Math.floor(remaining / 2);
+  const outer = remaining - middle;
+  return [inner, middle, outer];
+}
+
+function hardRingScale(step) {
+  return step / HARD_RING_SPACING_ANCHOR;
+}
+
+function hardRingRadii(step) {
+  const scale = hardRingScale(step);
+  return HARD_RING_RADII.map((radius) => radius * scale);
+}
+
+function createCircleRingPoints(radius, count, phase) {
+  if (count <= 0) return [];
+
+  return Array.from({ length: count }, (_, index) => {
+    const angle = phase + (index / count) * Math.PI * 2;
+    return {
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius,
+    };
+  });
+}
+
+function createHardRingPoints(step, count) {
+  const phase = -Math.PI / 2;
+  const counts = splitHardRingCounts(count);
+  const radii = hardRingRadii(step);
+  const points = radii.flatMap((radius, index) => createCircleRingPoints(radius, counts[index], phase));
   return centerPoints(points);
 }
 
@@ -302,6 +341,7 @@ function regeneratePoints() {
   const generators = {
     lattice: createLatticePoints,
     ishiang: createIShiangPoints,
+    hardRings: createHardRingPoints,
     ring: createRingPoints,
     line: createLinePoints,
   };
@@ -489,6 +529,21 @@ function drawIShiangGuide() {
   ctx.restore();
 }
 
+function drawHardRingGuide() {
+  if (state.layout !== "hardRings") return;
+
+  ctx.save();
+  hardRingRadii(state.spacing).forEach((radius, index) => {
+    const center = worldToScreen({ x: 0, y: 0 });
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, radius * state.scale, 0, Math.PI * 2);
+    ctx.strokeStyle = index === HARD_RING_RADII.length - 1 ? "rgba(29, 95, 208, 0.48)" : "rgba(29, 95, 208, 0.28)";
+    ctx.lineWidth = index === HARD_RING_RADII.length - 1 ? 2 : 1.5;
+    ctx.stroke();
+  });
+  ctx.restore();
+}
+
 function drawDiscs(overlaps) {
   const overlapped = new Set(overlaps.flat());
   state.discs.forEach((disc, index) => {
@@ -586,6 +641,7 @@ function draw() {
   drawGrid();
   drawDiscs(overlaps);
   drawIShiangGuide();
+  drawHardRingGuide();
   drawLineGuide();
   drawPoints(currentPoints);
   drawScale();

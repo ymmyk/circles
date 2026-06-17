@@ -13,10 +13,11 @@ Source puzzle: [3B1B YouTube Short](https://www.youtube.com/shorts/QLu_ZsRc_G0)
 - Lets you switch between moving circles and moving points.
 - Lets you draw a freehand path and place points at equal path-length spacing along it.
 - Includes an `I-Shiang` layout with two horizontal tangent virtual circles aligned to discs 5 and 6, a third tangent circle below, nine perimeter points in 10-point mode, and one center point.
+- Includes a `Hard Rings` layout based on the 45-point concentric-circle configuration from the CCCG paper: 3 points at radius 0.1, 21 at 0.721, and 21 at 1.0001 when the point count is 45.
 - Lets you drag the full disc packing as a locked group by default.
 - Lets you unlock the discs and drag individual unit discs.
 - Shows live coverage count, overlap count, and closest point spacing.
-- Supports lattice, ring, and line point layouts.
+- Supports lattice, hard-ring, ring, and line point layouts.
 
 ## Run Locally
 
