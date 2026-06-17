@@ -229,12 +229,16 @@ output {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.segmented.four-up {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .segment {
   border-color: transparent;
   background: transparent;
   min-height: 36px;
-  padding: 0 8px;
-  font-size: 13px;
+  padding: 0 7px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -247,6 +251,13 @@ output {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+.control-grid button.active {
+  border-color: rgba(29, 95, 208, 0.55);
+  background: rgba(29, 95, 208, 0.1);
+  color: var(--blue);
+  font-weight: 800;
 }
 
 .lock-row {
