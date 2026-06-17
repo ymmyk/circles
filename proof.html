@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proof: Disjoint Unit Disc Covering</title>
+    <title>Proof: Non-Overlapping Unit Disc Covering</title>
     <style>
       :root {
         color-scheme: light;
@@ -279,7 +279,7 @@
     <main>
       <header>
         <p class="eyebrow">Unit Disc Covering Proof</p>
-        <h1>Can any ten plane points be covered by disjoint unit discs?</h1>
+        <h1>Can any ten plane points be covered by non-overlapping unit discs?</h1>
         <nav class="top-links" aria-label="Proof navigation">
           <a href="index.html">Back to explorer</a>
           <a href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">Original short</a>
@@ -299,7 +299,7 @@
           <p class="note">The minimum noncoverable size is not currently known exactly.</p>
         </div>
         <div class="card">
-          <strong>Rigorous range</strong>
+          <strong>By-hand range</strong>
           <div class="answer">13 to 50</div>
           <p class="note">
             For the first noncoverable size <span class="math">k</span>. Computer search reports
@@ -311,16 +311,16 @@
       <section class="theorem">
         <h2>Answer</h2>
         <p>
-          Yes. Throughout this page, unit discs are closed, and "non-overlapping" means their interiors are
-          disjoint; boundary tangency is allowed. Given any 10 points in the plane, some finite subcollection of
-          a translated hexagonal packing of unit discs covers all 10 points.
+          Yes. Throughout this page, unit discs are closed, and "non-overlapping" means pairwise
+          interior-disjoint; boundary tangency is allowed. Given any 10 points in the plane, some finite
+          subcollection of a translated hexagonal packing of unit discs covers all 10 points.
         </p>
         <p>
           If an alternate rule forbade even tangency, scale the triangular lattice so neighboring centers are
           <span class="math">2 + epsilon</span> apart. The density becomes
           <span class="math">2 pi / (sqrt(3)(2 + epsilon)^2)</span>, which is still greater than
           <span class="math">0.9</span> whenever, for example, <span class="math">0 &lt; epsilon &lt; 0.0076</span>.
-          The same expectation proof then gives strictly separated closed unit discs of radius 1.
+          The same expectation proof then gives pairwise disjoint closed unit discs of radius 1.
         </p>
         <p>
           The second question has a different answer than a search for a 10-point counterexample suggests:
@@ -328,7 +328,8 @@
           failure is an open discrete-geometry problem. Let that minimum be <span class="math">k</span>. The
           hand-checkable published range is <span class="math">13 &le; k &le; 50</span>. The best reported
           computer-assisted upper bound improves this to <span class="math">k &le; 45</span>, but the cited
-          2012 paper marks that endpoint as coming from exhaustive computer search.
+          2012 paper marks that endpoint as coming from exhaustive computer search rather than a concise
+          hand proof.
         </p>
       </section>
 
@@ -398,14 +399,14 @@
           </li>
           <li>
             An upper-bound certificate: give one explicit <span class="math">k</span>-point configuration and
-            prove that no disjoint-unit-disc family can cover it.
+            prove that no non-overlapping unit-disc family can cover it.
           </li>
         </ol>
         <p>
           The 10-point proof above gives the lower bound <span class="math">k &ge; 11</span>. Later work improves
           this to <span class="math">k &ge; 13</span>, so every 12-point set is coverable. In the other direction,
           Aloupis, Hearn, Iwasawa, and Uehara give a hand-checkable 50-point noncoverable configuration, so
-          <span class="math">k &le; 50</span>. They also report a 45-point configuration certified by exhaustive
+          <span class="math">k &le; 50</span>. They also report a 45-point configuration found by exhaustive
           computer search. In <span class="math">sigma_2</span> notation, the reported computer-assisted status
           is <span class="math">12 &le; sigma_2 &le; 44</span>, equivalently
           <span class="math">13 &le; k &le; 45</span>.
@@ -414,6 +415,17 @@
           Computation can help search for counterexamples and certify finite case splits, but it does not replace
           the two proof obligations above. A numerical search becomes a proof only after every geometric case is
           bounded with exact inequalities or another checkable certificate.
+        </p>
+        <p>
+          In principle, these fixed-size claims can be expressed in the first-order theory of the reals. For the
+          universal lower bound <span class="math">C(n)</span>, put universal quantifiers over the
+          <span class="math">n</span> point coordinates and ask for a finite disjunction over
+          <span class="math">m &le; n</span> disk centers with pairwise center distances at least
+          <span class="math">2</span> and every point within distance <span class="math">1</span> of some center.
+          For a proposed counterexample, fix the point coordinates and prove the negation of that existential
+          condition. Exact real-algebraic decision methods can decide such sentences, but they are usually far
+          too large to be useful directly. A practical mathematical certificate is therefore a finite, checkable
+          reduction using exact inequalities, interval bounds, or verified case splits.
         </p>
       </section>
 
@@ -460,7 +472,7 @@
             <tr>
               <td>Ten-point proof</td>
               <td>Accepted</td>
-              <td>Panel accepted the density/expectation proof after quotient-cell and finite-subcollection wording was tightened.</td>
+              <td>Internal review accepted the density/expectation proof after quotient-cell and finite-subcollection wording was tightened.</td>
             </tr>
             <tr>
               <td>Threshold translation</td>
@@ -471,6 +483,34 @@
               <td>Upper-bound wording</td>
               <td>Revised</td>
               <td>The page now separates the hand-checkable <span class="math">k &le; 50</span> bound from the reported computer-assisted <span class="math">k &le; 45</span> bound.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Loop 3</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Status</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Terminology</td>
+              <td>Revised</td>
+              <td>The theorem now uses non-overlapping and pairwise interior-disjoint language, matching the tangency-allowed puzzle rule.</td>
+            </tr>
+            <tr>
+              <td>Computer upper bound</td>
+              <td>Revised</td>
+              <td>The 45-point result is described as reported by exhaustive computer search, not as a fully presented hand certificate.</td>
+            </tr>
+            <tr>
+              <td>Exact-threshold roadmap</td>
+              <td>Accepted</td>
+              <td>The page now explains that exact values require lower-bound theorems plus explicit counterexample certificates, possibly backed by exact real-algebraic or verified case-split methods.</td>
             </tr>
           </tbody>
         </table>
@@ -487,9 +527,16 @@
           </li>
           <li>
             Ji Hoon Chun, Christian Kipp, and Sandro Roch,
-            <a href="https://arxiv.org/pdf/2401.15821" target="_blank" rel="noreferrer">
+            <a href="https://doi.org/10.1016/j.comgeo.2025.102193" target="_blank" rel="noreferrer">
               On exact covering with unit disks
-            </a>, 2024 preprint; useful for the modern <span class="math">sigma_2</span> status summary.
+            </a>, <em>Computational Geometry</em> 129 (2025), 102193; useful for the modern
+            <span class="math">sigma_2</span> status summary.
+          </li>
+          <li>
+            Robert D. Barish and Tetsuo Shibuya,
+            <a href="https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.SWAT.2026.5" target="_blank" rel="noreferrer">
+              Arranging Pairwise Disjoint Shapes to Partition Point Sets
+            </a>, SWAT 2026; useful for the pairwise interior-disjoint phrasing and recent status context.
           </li>
           <li>
             Naoki Inaba's original puzzle and proof are discussed in the sources above and in the
@@ -499,7 +546,7 @@
       </section>
 
       <footer>
-        Proof version: loop 2. Generated on 2026-06-17. This page separates proved facts from open status.
+        Proof version: loop 3. Generated on 2026-06-17. This page separates proved facts from open status.
       </footer>
     </main>
   </body>
