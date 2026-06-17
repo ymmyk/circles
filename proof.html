@@ -299,10 +299,10 @@
           <p class="note">The minimum noncoverable size is not currently known exactly.</p>
         </div>
         <div class="card">
-          <strong>By-hand range</strong>
+          <strong>Hand-checkable bounds for k</strong>
           <div class="answer">13 to 50</div>
           <p class="note">
-            For the first noncoverable size <span class="math">k</span>. Computer search reports
+            Published proof bounds for the first noncoverable size. Search-only candidate:
             <span class="math">k &le; 45</span>.
           </p>
         </div>
@@ -320,16 +320,16 @@
           <span class="math">2 + epsilon</span> apart. The density becomes
           <span class="math">2 pi / (sqrt(3)(2 + epsilon)^2)</span>, which is still greater than
           <span class="math">0.9</span> whenever, for example, <span class="math">0 &lt; epsilon &lt; 0.0076</span>.
-          The same expectation proof then gives pairwise disjoint closed unit discs of radius 1.
+          The centers are then more than <span class="math">2</span> apart, so even boundary tangency is
+          impossible. The same expectation proof gives pairwise disjoint closed unit discs of radius 1.
         </p>
         <p>
           The second question has a different answer than a search for a 10-point counterexample suggests:
           10 is not a failure case. For the general problem, the exact minimum number of points that can force
           failure is an open discrete-geometry problem. Let that minimum be <span class="math">k</span>. The
-          hand-checkable published range is <span class="math">13 &le; k &le; 50</span>. The best reported
-          computer-assisted upper bound improves this to <span class="math">k &le; 45</span>, but the cited
-          2012 paper marks that endpoint as coming from exhaustive computer search rather than a concise
-          hand proof.
+          hand-checkable published range is <span class="math">13 &le; k &le; 50</span>. A 45-point
+          noncoverable candidate has also been reported from exhaustive computer search, but the cited 2012
+          paper does not present that endpoint as a concise hand-checkable proof.
         </p>
       </section>
 
@@ -407,9 +407,9 @@
           this to <span class="math">k &ge; 13</span>, so every 12-point set is coverable. In the other direction,
           Aloupis, Hearn, Iwasawa, and Uehara give a hand-checkable 50-point noncoverable configuration, so
           <span class="math">k &le; 50</span>. They also report a 45-point configuration found by exhaustive
-          computer search. In <span class="math">sigma_2</span> notation, the reported computer-assisted status
-          is <span class="math">12 &le; sigma_2 &le; 44</span>, equivalently
-          <span class="math">13 &le; k &le; 45</span>.
+          computer search. In <span class="math">sigma_2</span> notation, the published hand-checkable bounds
+          give <span class="math">12 &le; sigma_2 &lt; 50</span>, while the reported search-only candidate would
+          give <span class="math">sigma_2 &le; 44</span>, equivalently <span class="math">k &le; 45</span>.
         </p>
         <p>
           Computation can help search for counterexamples and certify finite case splits, but it does not replace
@@ -419,18 +419,26 @@
         <p>
           In principle, these fixed-size claims can be expressed in the first-order theory of the reals. For the
           universal lower bound <span class="math">C(n)</span>, put universal quantifiers over the
-          <span class="math">n</span> point coordinates and ask for a finite disjunction over
-          <span class="math">m &le; n</span> disk centers with pairwise center distances at least
-          <span class="math">2</span> and every point within distance <span class="math">1</span> of some center.
-          For a proposed counterexample, fix the point coordinates and prove the negation of that existential
-          condition. Exact real-algebraic decision methods can decide such sentences, but they are usually far
-          too large to be useful directly. A practical mathematical certificate is therefore a finite, checkable
-          reduction using exact inequalities, interval bounds, or verified case splits.
+          <span class="math">n</span> point coordinates, then use a finite disjunction over
+          <span class="math">m = 1, ..., n</span> saying that there exist disk centers
+          <span class="math">c_1, ..., c_m</span> with squared center distances
+          <span class="math">||c_a - c_b||^2 &ge; 4</span> and every point satisfying
+          <span class="math">||p_i - c_j||^2 &le; 1</span> for at least one center. Repeated point coordinates
+          are harmless. For a proposed counterexample, fix exact or certified point coordinates and prove the
+          negation of that existential condition. That proves <span class="math">C(n)</span> is false for that
+          <span class="math">n</span>; proving minimality still separately requires <span class="math">C(n - 1)</span>.
+          Exact real-algebraic decision methods can decide such sentences, but they are usually far too large to
+          be useful directly. A practical mathematical certificate is therefore a finite, checkable reduction using
+          exact inequalities, interval bounds, or verified case splits.
         </p>
       </section>
 
       <section class="review">
-        <h2>Review Logs</h2>
+        <h2>Internal Review Appendix</h2>
+        <p class="note">
+          These entries document the requested iterative review process. They are not peer review and are not
+          independent evidence beyond the proofs and sources above.
+        </p>
         <h3>Loop 1</h3>
         <table>
           <thead>
@@ -452,9 +460,9 @@
               <td>The exact value is not known; only bounds are stated.</td>
             </tr>
             <tr>
-              <td>The page should answer the user's counterexample instinct</td>
-              <td>Accepted</td>
-              <td>It states that 10-point counterexamples cannot exist and explains why the general threshold is open.</td>
+              <td>A 10-point counterexample exists</td>
+              <td>Rejected</td>
+              <td>Rejected: the density proof shows no 10-point counterexample exists.</td>
             </tr>
           </tbody>
         </table>
@@ -472,7 +480,7 @@
             <tr>
               <td>Ten-point proof</td>
               <td>Accepted</td>
-              <td>Internal review accepted the density/expectation proof after quotient-cell and finite-subcollection wording was tightened.</td>
+              <td>The density/expectation proof was accepted after quotient-cell and finite-subcollection wording was tightened.</td>
             </tr>
             <tr>
               <td>Threshold translation</td>
@@ -482,7 +490,7 @@
             <tr>
               <td>Upper-bound wording</td>
               <td>Revised</td>
-              <td>The page now separates the hand-checkable <span class="math">k &le; 50</span> bound from the reported computer-assisted <span class="math">k &le; 45</span> bound.</td>
+              <td>The hand-checkable <span class="math">k &le; 50</span> bound was separated from the reported computer-search <span class="math">k &le; 45</span> candidate.</td>
             </tr>
           </tbody>
         </table>
@@ -500,7 +508,7 @@
             <tr>
               <td>Terminology</td>
               <td>Revised</td>
-              <td>The theorem now uses non-overlapping and pairwise interior-disjoint language, matching the tangency-allowed puzzle rule.</td>
+              <td>Terminology was revised to use non-overlapping and pairwise interior-disjoint language for the tangency-allowed puzzle rule.</td>
             </tr>
             <tr>
               <td>Computer upper bound</td>
@@ -510,7 +518,35 @@
             <tr>
               <td>Exact-threshold roadmap</td>
               <td>Accepted</td>
-              <td>The page now explains that exact values require lower-bound theorems plus explicit counterexample certificates, possibly backed by exact real-algebraic or verified case-split methods.</td>
+              <td>The roadmap explains that exact values require lower-bound theorems plus explicit counterexample certificates, possibly backed by exact real-algebraic or verified case-split methods.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Loop 4</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Status</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ten-point proof</td>
+              <td>Accepted</td>
+              <td>Translation-only randomization, density, and boundary handling were accepted; the strict no-tangency aside was clarified.</td>
+            </tr>
+            <tr>
+              <td>First-order certificate roadmap</td>
+              <td>Revised</td>
+              <td>The roadmap now gives explicit existential centers and squared polynomial inequalities.</td>
+            </tr>
+            <tr>
+              <td>Search-only 45-point result</td>
+              <td>Revised</td>
+              <td>The 45-point configuration is presented as a reported search-only candidate rather than a hand-checkable bound.</td>
             </tr>
           </tbody>
         </table>
@@ -539,14 +575,14 @@
             </a>, SWAT 2026; useful for the pairwise interior-disjoint phrasing and recent status context.
           </li>
           <li>
-            Naoki Inaba's original puzzle and proof are discussed in the sources above and in the
-            <a href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">3Blue1Brown short</a>.
+            <a href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">3Blue1Brown short</a>,
+            a popular exposition of Inaba's 10-point puzzle.
           </li>
         </ul>
       </section>
 
       <footer>
-        Proof version: loop 3. Generated on 2026-06-17. This page separates proved facts from open status.
+        Last reviewed: 2026-06-17. This page separates proved facts from open status; internal review loop: 4.
       </footer>
     </main>
   </body>
