@@ -159,6 +159,12 @@ label {
   margin: 0;
 }
 
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .source-link {
   display: inline-flex;
   align-items: center;

@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proof: Disjoint Unit Disc Covering</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #18212b;
+        --muted: #5d6b7c;
+        --line: #d9e1ea;
+        --paper: #f8fafc;
+        --panel: #ffffff;
+        --blue: #1d5fd0;
+        --green: #138a58;
+        --amber: #df8f24;
+        --red: #b7332f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+        background:
+          linear-gradient(rgba(24, 33, 43, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(24, 33, 43, 0.035) 1px, transparent 1px),
+          var(--paper);
+        background-size: 26px 26px;
+      }
+
+      main {
+        width: min(980px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      header {
+        margin-bottom: 26px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 850;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        letter-spacing: 0;
+        line-height: 1.05;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(38px, 7vw, 72px);
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 28px;
+      }
+
+      h3 {
+        margin: 22px 0 8px;
+        font-size: 19px;
+      }
+
+      p {
+        margin: 0 0 14px;
+      }
+
+      a {
+        color: var(--blue);
+        font-weight: 750;
+      }
+
+      .top-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .top-links a,
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin: 28px 0;
+      }
+
+      .card,
+      section {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 14px 34px rgba(24, 33, 43, 0.08);
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+        text-transform: uppercase;
+      }
+
+      .card .answer {
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .yes {
+        color: var(--green);
+      }
+
+      .open {
+        color: var(--amber);
+      }
+
+      section {
+        margin: 18px 0;
+        padding: 24px;
+      }
+
+      .theorem {
+        border-left: 5px solid var(--green);
+      }
+
+      .status {
+        border-left: 5px solid var(--amber);
+      }
+
+      .proof {
+        border-left: 5px solid var(--blue);
+      }
+
+      .review {
+        border-left: 5px solid var(--ink);
+      }
+
+      ol,
+      ul {
+        margin: 0 0 14px 22px;
+        padding: 0;
+      }
+
+      li {
+        margin: 8px 0;
+      }
+
+      code,
+      .math {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      }
+
+      .math {
+        padding: 0 3px;
+        border-radius: 4px;
+        background: rgba(29, 95, 208, 0.08);
+        color: #153f8d;
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 15px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      footer {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          width: min(100vw - 20px, 560px);
+          padding-top: 18px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 18px;
+        }
+
+        table,
+        tbody,
+        tr,
+        td,
+        th {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        td {
+          padding: 8px 0;
+        }
+
+        td::before {
+          display: block;
+          color: var(--muted);
+          font-size: 12px;
+          font-weight: 850;
+          text-transform: uppercase;
+        }
+
+        td:nth-child(1)::before {
+          content: "Claim";
+        }
+
+        td:nth-child(2)::before {
+          content: "Status";
+        }
+
+        td:nth-child(3)::before {
+          content: "Reason";
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Unit Disc Covering Proof</p>
+        <h1>Can any ten plane points be covered by disjoint unit discs?</h1>
+        <nav class="top-links" aria-label="Proof navigation">
+          <a href="index.html">Back to explorer</a>
+          <a href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">Original short</a>
+          <a href="#references">References</a>
+        </nav>
+      </header>
+
+      <div class="grid" aria-label="Proof summary">
+        <div class="card">
+          <strong>Ten points</strong>
+          <div class="answer yes">Yes</div>
+          <p class="note">Every configuration of 10 points is coverable.</p>
+        </div>
+        <div class="card">
+          <strong>Exact failure threshold</strong>
+          <div class="answer open">Open</div>
+          <p class="note">The minimum noncoverable size is not currently known exactly.</p>
+        </div>
+        <div class="card">
+          <strong>Known range</strong>
+          <div class="answer">13 to 45</div>
+          <p class="note">For the minimum number <span class="math">k</span> of points in a counterexample.</p>
+        </div>
+      </div>
+
+      <section class="theorem">
+        <h2>Answer</h2>
+        <p>
+          Yes. Given any 10 points in the plane, some finite subcollection of a translated hexagonal packing of
+          unit discs covers all 10 points. The discs in that packing are pairwise disjoint except for allowed
+          tangencies. If an alternate rule forbade even tangency, replace the lattice spacing 2 by
+          <span class="math">2 + epsilon</span> for sufficiently small positive <span class="math">epsilon</span>.
+          The density remains greater than <span class="math">0.9</span>, so the same expectation proof gives
+          strictly separated closed unit discs. The app and puzzle comments allow tangency, so the tangent
+          hexagonal packing is the intended model here.
+        </p>
+        <p>
+          The second question has a different answer than a search for a 10-point counterexample suggests:
+          10 is not a failure case. For the general problem, the exact minimum number of points that can force
+          failure is an open discrete-geometry problem. Let that minimum be <span class="math">k</span>. Current
+          published bounds place it in the range <span class="math">13 &le; k &le; 45</span>. The upper end is
+          computer-assisted in the cited 2012 work; the same literature also gives a hand-checkable analytic
+          noncoverable configuration with 50 points.
+        </p>
+      </section>
+
+      <section class="proof">
+        <h2>Proof For Ten Points</h2>
+        <h3>Setup</h3>
+        <p>
+          Let <span class="math">L</span> be the triangular lattice generated by
+          <span class="math">(2,0)</span> and <span class="math">(1,&radic;3)</span>. Place a unit disc
+          at every lattice point. Adjacent discs are tangent, so the packing has no overlapping interiors.
+          Boundary choices do not change any area computation below.
+          A fundamental parallelogram has area <span class="math">2&radic;3</span>, and it contains one unit
+          disc worth of area. Therefore the covered density is
+        </p>
+        <p class="math">rho = pi / (2 sqrt(3)) = pi / sqrt(12) = 0.906899... &gt; 0.9.</p>
+
+        <h3>Random translation</h3>
+        <p>
+          Translate the entire infinite packing by a vector chosen uniformly from one fundamental parallelogram.
+          For any fixed point <span class="math">p</span>, the probability that <span class="math">p</span> is
+          covered is exactly the density <span class="math">rho</span>. Boundary cases do not affect this
+          probability because the set of translations putting <span class="math">p</span> on a disc boundary
+          has area zero.
+        </p>
+
+        <h3>Expectation</h3>
+        <p>
+          Let <span class="math">P</span> be any set of 10 points, and let <span class="math">U</span> be the
+          number of points of <span class="math">P</span> not covered by the random translate. By linearity of
+          expectation,
+        </p>
+        <p class="math">E[U] = 10(1 - rho) = 10(1 - pi / sqrt(12)) = 0.9310... &lt; 1.</p>
+        <p>
+          The random variable <span class="math">U</span> is a nonnegative integer. If every translate missed at
+          least one of the 10 points, then <span class="math">U &ge; 1</span> for every translate, forcing
+          <span class="math">E[U] &ge; 1</span>. That contradicts the inequality above. Hence some translate has
+          <span class="math">U = 0</span>, so it covers all 10 points.
+        </p>
+        <p>
+          Only finitely many discs from that infinite packing are needed: discard every disc that contains none
+          of the 10 points. The remaining discs are still pairwise disjoint and cover the given point set.
+        </p>
+      </section>
+
+      <section class="status">
+        <h2>How The Minimum Would Be Determined</h2>
+        <p>
+          Define <span class="math">C(n)</span> to mean "every set of <span class="math">n</span> plane points
+          can be covered by disjoint unit discs." Define
+          <span class="math">k = min { n : C(n) is false }</span>, if such an <span class="math">n</span>
+          exists.
+        </p>
+        <p>To prove the exact value of <span class="math">k</span>, two independent pieces are needed:</p>
+        <ol>
+          <li>
+            A lower-bound theorem: prove <span class="math">C(k - 1)</span>, meaning every point set of size
+            <span class="math">k - 1</span> is coverable.
+          </li>
+          <li>
+            An upper-bound certificate: give one explicit <span class="math">k</span>-point configuration and
+            prove that no disjoint-unit-disc family can cover it.
+          </li>
+        </ol>
+        <p>
+          The 10-point proof above gives the lower bound <span class="math">k &ge; 11</span>. Later work improves
+          this to <span class="math">k &ge; 13</span>, so every 12-point set is coverable. In the other direction,
+          dense point configurations give finite upper bounds; current literature states the equivalent bound
+          <span class="math">12 &le; sigma_2 &le; 44</span>, where
+          <span class="math">sigma_2</span> is the largest <span class="math">n</span> for which
+          <span class="math">C(n)</span> holds. Equivalently, <span class="math">13 &le; k &le; 45</span>.
+          A conservative fully analytic upper bound from the 2012 paper is <span class="math">k &le; 50</span>.
+        </p>
+        <p>
+          Computation can help search for counterexamples and certify finite case splits, but it does not replace
+          the two proof obligations above. A numerical search becomes a proof only after every geometric case is
+          bounded with exact inequalities or another checkable certificate.
+        </p>
+      </section>
+
+      <section class="review">
+        <h2>Loop 1 Review Log</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Status</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Any 10 points are coverable</td>
+              <td>Accepted</td>
+              <td>Follows from the hexagonal-packing density and expectation argument, with boundary/tangency caveats stated.</td>
+            </tr>
+            <tr>
+              <td>The exact minimum failure size is known</td>
+              <td>Rejected</td>
+              <td>The exact value is not known; only bounds are stated.</td>
+            </tr>
+            <tr>
+              <td>The page should answer the user's counterexample instinct</td>
+              <td>Accepted</td>
+              <td>It states that 10-point counterexamples cannot exist and explains why the general threshold is open.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="references">
+        <h2>References</h2>
+        <ul>
+          <li>
+            Greg Aloupis, Robert A. Hearn, Hirokazu Iwasawa, and Ryuhei Uehara,
+            <a href="https://2012.cccg.ca/papers/paper13.pdf" target="_blank" rel="noreferrer">
+              Covering Points with Disjoint Unit Disks
+            </a>, CCCG 2012.
+          </li>
+          <li>
+            Mikkel Abrahamsen, Linda Kleist, Tillmann Miltzow, and Simon Odense,
+            <a href="https://arxiv.org/pdf/2401.15821" target="_blank" rel="noreferrer">
+              On exact covering with unit disks
+            </a>, 2024 preprint.
+          </li>
+          <li>
+            Naoki Inaba's original puzzle and proof are discussed in the sources above and in the
+            <a href="https://www.youtube.com/shorts/QLu_ZsRc_G0" target="_blank" rel="noreferrer">3Blue1Brown short</a>.
+          </li>
+        </ul>
+      </section>
+
+      <footer>
+        Proof version: loop 1. Generated on 2026-06-17. This page separates proved facts from open status.
+      </footer>
+    </main>
+  </body>
+</html>
